@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Option B - Programme House</title>
+    <style>
+      :root {
+        --bg: #f2ede4;
+        --surface: #f8f3eb;
+        --ink: #191614;
+        --muted: #6f675f;
+        --line: #cec3b6;
+        --accent: #8a6045;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+      }
+      a { color: inherit; text-decoration: none; }
+      .ui {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+      }
+      .ribbon,
+      .masthead,
+      .index-row,
+      .closing-note {
+        padding-left: 32px;
+        padding-right: 32px;
+      }
+      .ribbon,
+      .masthead,
+      .index-row,
+      .programme,
+      .closing-note {
+        border-bottom: 1px solid var(--line);
+      }
+      .ribbon,
+      .masthead {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 48px;
+      }
+      .ribbon {
+        font-size: 10px;
+        color: var(--muted);
+      }
+      .brand {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 28px;
+        letter-spacing: -0.05em;
+      }
+      .menu,
+      .meta {
+        display: flex;
+        gap: 18px;
+        align-items: center;
+      }
+      .intro {
+        display: grid;
+        grid-template-columns: 1.25fr 0.75fr;
+        gap: 30px;
+        padding: 34px 32px 26px;
+        border-bottom: 1px solid var(--line);
+      }
+      .intro h1 {
+        margin: 0;
+        font-size: clamp(62px, 8vw, 126px);
+        line-height: 0.88;
+        letter-spacing: -0.06em;
+        font-weight: 400;
+      }
+      .intro-copy p,
+      .market-note p,
+      .detail p,
+      .closing-note p {
+        margin: 0;
+        color: #4b443d;
+        line-height: 1.7;
+      }
+      .intro-copy p {
+        max-width: 720px;
+        margin-top: 20px;
+        font-size: 18px;
+      }
+      .intro-side {
+        display: grid;
+        gap: 18px;
+        align-content: end;
+      }
+      .metric-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .metric {
+        border: 1px solid var(--line);
+        padding: 14px;
+        background: rgba(255, 255, 255, 0.4);
+      }
+      .metric strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 34px;
+        letter-spacing: -0.04em;
+        font-weight: 400;
+      }
+      .index-row {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background: rgba(242, 237, 228, 0.94);
+        backdrop-filter: blur(10px);
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        min-height: 52px;
+        align-items: center;
+        font-size: 11px;
+      }
+      .filters,
+      .anchors {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+      .programme {
+        padding: 0 32px;
+      }
+      .programme-section {
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr) minmax(280px, 0.72fr);
+        gap: 24px;
+        padding: 28px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .programme-section:last-child {
+        border-bottom: 0;
+      }
+      .programme-label {
+        padding-top: 10px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .figure-wrap {
+        display: grid;
+        gap: 12px;
+      }
+      .figure {
+        min-height: 540px;
+        background:
+          linear-gradient(rgba(25,22,20,0.06), rgba(25,22,20,0.06)),
+          linear-gradient(140deg, #d8cfc4, #f2ece3 48%, #b8a493);
+      }
+      .figure.alt-one {
+        background:
+          linear-gradient(rgba(25,22,20,0.06), rgba(25,22,20,0.06)),
+          linear-gradient(140deg, #cabdb0, #ebe2d8 50%, #a58f7d);
+      }
+      .figure.alt-two {
+        background:
+          linear-gradient(rgba(25,22,20,0.05), rgba(25,22,20,0.05)),
+          linear-gradient(140deg, #ddd2c7, #f6f0e6 52%, #b49d89);
+      }
+      .figure.alt-three {
+        background:
+          linear-gradient(rgba(25,22,20,0.07), rgba(25,22,20,0.07)),
+          linear-gradient(140deg, #cfc0b2, #ede4d9 52%, #9e8677);
+      }
+      .caption {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .detail {
+        display: grid;
+        align-content: start;
+        gap: 18px;
+      }
+      .detail h2 {
+        margin: 0;
+        font-size: clamp(38px, 4.6vw, 64px);
+        line-height: 0.92;
+        letter-spacing: -0.05em;
+        font-weight: 400;
+      }
+      .artist {
+        color: #413a34;
+        font-size: 18px;
+      }
+      .info-list {
+        display: grid;
+        gap: 10px;
+        padding-top: 6px;
+      }
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding-top: 10px;
+        border-top: 1px solid var(--line);
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 11px;
+      }
+      .market-note {
+        border: 1px solid var(--line);
+        background: var(--surface);
+        padding: 18px;
+      }
+      .market-note strong {
+        display: block;
+        margin-bottom: 10px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 10px;
+      }
+      .intelligence {
+        padding: 30px 32px;
+        border-bottom: 1px solid var(--line);
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 24px;
+      }
+      .chart-panel,
+      .signal-panel {
+        border: 1px solid var(--line);
+        background: var(--surface);
+        padding: 22px;
+      }
+      .chart-panel h3,
+      .signal-panel h3 {
+        margin: 0 0 14px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 11px;
+        font-weight: 500;
+      }
+      .chart {
+        height: 240px;
+        background:
+          linear-gradient(to top, transparent 19%, #e6ddd1 20%, transparent 21%) 0 0/100% 20%,
+          linear-gradient(117deg, transparent 0 8%, #181614 9% 10%, transparent 11% 28%, #181614 29% 30%, transparent 31% 47%, #8a6045 48% 49%, transparent 50% 67%, #8a6045 68% 69%, transparent 70% 100%);
+      }
+      .legend {
+        display: flex;
+        gap: 18px;
+        margin-top: 12px;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+      .signal-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px 18px;
+      }
+      .signal {
+        padding-top: 12px;
+        border-top: 1px solid var(--line);
+      }
+      .signal-label {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 10px;
+        color: var(--muted);
+      }
+      .signal strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 22px;
+        font-weight: 400;
+      }
+      .closing-note {
+        padding-top: 18px;
+        padding-bottom: 32px;
+      }
+      @media (max-width: 1100px) {
+        .intro,
+        .programme-section,
+        .intelligence {
+          grid-template-columns: 1fr;
+        }
+        .figure {
+          min-height: 420px;
+        }
+      }
+      @media (max-width: 720px) {
+        .menu,
+        .meta,
+        .anchors {
+          display: none;
+        }
+        .filters {
+          gap: 12px;
+        }
+        .metric-grid,
+        .signal-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ribbon ui">
+      <span>Austria / DACH / Europe</span>
+      <span>English / German</span>
+    </div>
+    <header class="masthead ui">
+      <div class="brand">Arthentico-X</div>
+      <nav class="menu">
+        <span>Discover</span>
+        <span>Artists</span>
+        <span>Market Insights</span>
+        <span>Sell</span>
+      </nav>
+      <div class="meta">
+        <span>Search</span>
+        <span>Login</span>
+      </div>
+    </header>
+    <section class="intro">
+      <div class="intro-copy">
+        <div class="ui" style="font-size:11px;color:var(--muted);">Option B / Programme House</div>
+        <h1>Collected Like A Programme, Not A Shop.</h1>
+        <p>
+          The same Arthentico-X product logic as Option A, but paced like a gallery programme:
+          market categories become rooms, works are introduced as curated entries, and valuation
+          intelligence sits inside the reading experience instead of leading it.
+        </p>
+      </div>
+      <div class="intro-side">
+        <div class="market-note">
+          <strong>Curatorial Position</strong>
+          <p>
+            Public discovery stays open, premium analytics stay gated, and seller-led asking prices
+            remain visible beside the platform's valuation logic.
+          </p>
+        </div>
+        <div class="metric-grid">
+          <div class="metric">
+            <div class="ui" style="font-size:10px;color:var(--muted);">Works Live</div>
+            <strong>142</strong>
+          </div>
+          <div class="metric">
+            <div class="ui" style="font-size:10px;color:var(--muted);">Artists Tracked</div>
+            <strong>38</strong>
+          </div>
+          <div class="metric">
+            <div class="ui" style="font-size:10px;color:var(--muted);">Avg. Value Drift</div>
+            <strong>+7.2%</strong>
+          </div>
+          <div class="metric">
+            <div class="ui" style="font-size:10px;color:var(--muted);">Resale Eligible</div>
+            <strong>56</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="index-row ui">
+      <div class="anchors">
+        <a href="#artist-direct">Artist Direct</a>
+        <a href="#collector-resale">Collector Resale</a>
+        <a href="#gallery-listing">Gallery Listing</a>
+        <a href="#platform-shipping">Platform Shipping</a>
+      </div>
+      <div class="filters">
+        <span>Filter</span>
+        <span>Sort By</span>
+        <span>Medium</span>
+        <span>Price</span>
+        <span>Artist Growth</span>
+      </div>
+    </div>
+    <main class="programme">
+      <section class="programme-section" id="artist-direct">
+        <div class="programme-label ui">
+          <div>01</div>
+          <div style="margin-top:10px;">Artist Direct</div>
+        </div>
+        <div class="figure-wrap">
+          <div class="figure"></div>
+          <div class="caption ui">
+            <span>Current Room</span>
+            <span>Showing 12 of 108 Works</span>
+          </div>
+        </div>
+        <div class="detail">
+          <h2>Folding Realities</h2>
+          <div class="artist">Michael Wegerer</div>
+          <p>
+            Primary-market listing with seller-controlled pricing, visible valuation delta, and
+            public artist discovery for new collectors.
+          </p>
+          <div class="info-list">
+            <div class="info-row"><span>Asking Price</span><span>EUR 4,800</span></div>
+            <div class="info-row"><span>Market Estimate</span><span>+6.4% est.</span></div>
+            <div class="info-row"><span>Shipping</span><span>Platform coordinated</span></div>
+            <div class="info-row"><span>Verification</span><span>Document reviewed</span></div>
+          </div>
+          <div class="market-note">
+            <strong>Why This Layout Works</strong>
+            <p>
+              It treats each market type as a programmed room. The page reads like an exhibition
+              index first, which gives the marketplace more authority and less storefront noise.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="programme-section" id="collector-resale">
+        <div class="programme-label ui">
+          <div>02</div>
+          <div style="margin-top:10px;">Collector Resale</div>
+        </div>
+        <div class="figure-wrap">
+          <div class="figure alt-one"></div>
+          <div class="caption ui">
+            <span>Secondary Market</span>
+            <span>Open To Collector Relisting</span>
+          </div>
+        </div>
+        <div class="detail">
+          <h2>Blue Study No. 2</h2>
+          <div class="artist">Alina Babenko</div>
+          <p>
+            Resale inventory is presented like a discrete curatorial section instead of mixed into a
+            generic product grid, which helps buyers understand provenance and price context.
+          </p>
+          <div class="info-list">
+            <div class="info-row"><span>Asking Price</span><span>EUR 3,250</span></div>
+            <div class="info-row"><span>Market Estimate</span><span>Within range</span></div>
+            <div class="info-row"><span>Ownership Trail</span><span>1 prior sale</span></div>
+            <div class="info-row"><span>Seller Type</span><span>Collector</span></div>
+          </div>
+        </div>
+      </section>
+      <section class="programme-section" id="gallery-listing">
+        <div class="programme-label ui">
+          <div>03</div>
+          <div style="margin-top:10px;">Gallery Listing</div>
+        </div>
+        <div class="figure-wrap">
+          <div class="figure alt-two"></div>
+          <div class="caption ui">
+            <span>Bulk Portfolio Ready</span>
+            <span>Artist Attribution Preserved</span>
+          </div>
+        </div>
+        <div class="detail">
+          <h2>Grey Geometry</h2>
+          <div class="artist">Anna Nowak</div>
+          <p>
+            Gallery and auction partners still use the same marketplace logic, but the page
+            foregrounds their portfolio role, historical sales context, and creator attribution.
+          </p>
+          <div class="info-list">
+            <div class="info-row"><span>Asking Price</span><span>EUR 8,900</span></div>
+            <div class="info-row"><span>Market Estimate</span><span>+11.1% est.</span></div>
+            <div class="info-row"><span>Seller Type</span><span>Gallery</span></div>
+            <div class="info-row"><span>Portfolio Trend</span><span>+9.3% annual</span></div>
+          </div>
+        </div>
+      </section>
+      <section class="programme-section" id="platform-shipping">
+        <div class="programme-label ui">
+          <div>04</div>
+          <div style="margin-top:10px;">Platform Shipping</div>
+        </div>
+        <div class="figure-wrap">
+          <div class="figure alt-three"></div>
+          <div class="caption ui">
+            <span>Operational Layer</span>
+            <span>Shipping Responsibility Visible</span>
+          </div>
+        </div>
+        <div class="detail">
+          <h2>Night Cabinet</h2>
+          <div class="artist">Jan Pater</div>
+          <p>
+            Shipping becomes part of the exhibition note rather than a hidden checkout setting, so
+            buyers understand early whether the seller or the platform coordinates transport.
+          </p>
+          <div class="info-list">
+            <div class="info-row"><span>Asking Price</span><span>EUR 12,400</span></div>
+            <div class="info-row"><span>Market Estimate</span><span>Below range</span></div>
+            <div class="info-row"><span>Shipping</span><span>Seller or platform</span></div>
+            <div class="info-row"><span>Carrier Policy</span><span>Approved network</span></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <section class="intelligence">
+      <div class="chart-panel">
+        <h3>Artwork Valuation</h3>
+        <div class="chart"></div>
+        <div class="legend">
+          <span>Estimate</span>
+          <span>Asking Price</span>
+          <span>Premium Analytics</span>
+        </div>
+      </div>
+      <div class="signal-panel">
+        <h3>Artist Signal Stack</h3>
+        <div class="signal-grid">
+          <div class="signal">
+            <div class="signal-label">Exhibitions</div>
+            <strong>14 tracked</strong>
+          </div>
+          <div class="signal">
+            <div class="signal-label">Grants & Prizes</div>
+            <strong>5 active factors</strong>
+          </div>
+          <div class="signal">
+            <div class="signal-label">Comparable Sales</div>
+            <strong>31 weighted comps</strong>
+          </div>
+          <div class="signal">
+            <div class="signal-label">Portfolio Momentum</div>
+            <strong>+8.1%</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="closing-note">
+      <p>
+        This direction is closer to Serpentine and exhibition-programme sites than to luxury
+        storefronts. It keeps all of Option A's modules, but changes the reading pattern from grid
+        shopping to curated progression.
+      </p>
+    </section>
+  </body>
+  </html>

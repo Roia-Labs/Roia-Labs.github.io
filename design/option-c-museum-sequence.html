@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Option C - Curator Route</title>
+    <style>
+      :root {
+        --bg: #f7f4ef;
+        --surface: #fffdf9;
+        --ink: #14110f;
+        --muted: #726a63;
+        --line: #d8cfc5;
+        --accent: #5b3b31;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Avenir Next", "Segoe UI", Arial, sans-serif;
+      }
+      a { color: inherit; text-decoration: none; }
+      .ui {
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 11px;
+      }
+      .shell {
+        display: grid;
+        grid-template-columns: minmax(320px, 0.92fr) minmax(0, 1.08fr);
+        min-height: 100vh;
+      }
+      .rail {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        padding: 26px 28px 30px;
+        border-right: 1px solid var(--line);
+        display: grid;
+        grid-template-rows: auto auto auto 1fr auto;
+        gap: 22px;
+      }
+      .brand-row,
+      .menu,
+      .filter-list,
+      .stats {
+        display: grid;
+        gap: 12px;
+      }
+      .brand-row {
+        grid-template-columns: 1fr auto;
+        align-items: start;
+      }
+      .brand {
+        font-size: 28px;
+        letter-spacing: -0.05em;
+      }
+      .hero-copy h1 {
+        margin: 0;
+        font-family: "Times New Roman", Georgia, serif;
+        font-size: clamp(56px, 7vw, 108px);
+        line-height: 0.9;
+        letter-spacing: -0.06em;
+        font-weight: 400;
+      }
+      .hero-copy p,
+      .chapter-copy p,
+      .summary p {
+        margin: 0;
+        color: #4a443f;
+        line-height: 1.7;
+      }
+      .hero-copy p {
+        margin-top: 18px;
+        max-width: 430px;
+        font-size: 17px;
+      }
+      .visual {
+        min-height: 220px;
+        border: 1px solid var(--line);
+        background:
+          linear-gradient(rgba(20,17,15,0.06), rgba(20,17,15,0.06)),
+          linear-gradient(135deg, #d4c8bc, #f0e8df 50%, #b39c8a);
+      }
+      .stats {
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+      }
+      .stat {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding-top: 10px;
+        border-top: 1px solid var(--line);
+      }
+      .stat strong {
+        font-family: "Times New Roman", Georgia, serif;
+        font-size: 24px;
+        letter-spacing: -0.03em;
+        font-weight: 400;
+      }
+      .filter-list {
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+      }
+      .route {
+        padding: 0 32px 44px;
+      }
+      .chapter {
+        min-height: 92vh;
+        padding: 26px 0;
+        border-bottom: 1px solid var(--line);
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        gap: 22px;
+        align-items: start;
+      }
+      .chapter:last-child {
+        min-height: auto;
+      }
+      .chapter-stage {
+        display: grid;
+        gap: 16px;
+      }
+      .chapter-visual {
+        min-height: 560px;
+        background:
+          linear-gradient(rgba(20,17,15,0.05), rgba(20,17,15,0.05)),
+          linear-gradient(140deg, #d4c8bc, #f5eee6 48%, #b89f8c);
+      }
+      .chapter-visual.alt-one {
+        background:
+          linear-gradient(rgba(20,17,15,0.05), rgba(20,17,15,0.05)),
+          linear-gradient(140deg, #cbbeaf, #ede3d9 48%, #a99181);
+      }
+      .chapter-visual.alt-two {
+        background:
+          linear-gradient(rgba(20,17,15,0.05), rgba(20,17,15,0.05)),
+          linear-gradient(140deg, #ddd1c4, #f7f0e7 48%, #b49c87);
+      }
+      .chapter-visual.alt-three {
+        background:
+          linear-gradient(rgba(20,17,15,0.05), rgba(20,17,15,0.05)),
+          linear-gradient(140deg, #cfc0b0, #ede4da 48%, #9d8577);
+      }
+      .chapter-caption {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        color: var(--muted);
+      }
+      .chapter-copy {
+        display: grid;
+        gap: 16px;
+        position: sticky;
+        top: 28px;
+      }
+      .chapter-copy h2 {
+        margin: 0;
+        font-family: "Times New Roman", Georgia, serif;
+        font-size: clamp(34px, 4vw, 58px);
+        line-height: 0.92;
+        letter-spacing: -0.05em;
+        font-weight: 400;
+      }
+      .artist {
+        font-size: 18px;
+        color: #37312d;
+      }
+      .stack {
+        display: grid;
+        gap: 10px;
+      }
+      .stack-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        padding-top: 10px;
+        border-top: 1px solid var(--line);
+      }
+      .summary {
+        padding-top: 12px;
+      }
+      .intelligence {
+        padding: 28px 0 0;
+        display: grid;
+        gap: 18px;
+      }
+      .chart-panel,
+      .signal-panel {
+        border: 1px solid var(--line);
+        background: var(--surface);
+        padding: 20px;
+      }
+      .chart {
+        height: 280px;
+        background:
+          linear-gradient(to top, transparent 16%, #e7ddd2 17%, transparent 18%) 0 0/100% 16.66%,
+          linear-gradient(113deg, transparent 0 9%, #14110f 10% 11%, transparent 12% 31%, #5b3b31 32% 33%, transparent 34% 53%, #14110f 54% 55%, transparent 56% 73%, #5b3b31 74% 75%, transparent 76% 100%);
+      }
+      .signal-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px 18px;
+      }
+      .signal {
+        padding-top: 12px;
+        border-top: 1px solid var(--line);
+      }
+      .signal strong {
+        display: block;
+        margin-top: 7px;
+        font-family: "Times New Roman", Georgia, serif;
+        font-size: 24px;
+        font-weight: 400;
+      }
+      @media (max-width: 1100px) {
+        .shell,
+        .chapter {
+          grid-template-columns: 1fr;
+        }
+        .rail {
+          position: static;
+          height: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+        }
+        .chapter-copy {
+          position: static;
+        }
+        .chapter {
+          min-height: auto;
+        }
+      }
+      @media (max-width: 720px) {
+        .signal-grid {
+          grid-template-columns: 1fr;
+        }
+        .route {
+          padding-left: 22px;
+          padding-right: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="rail">
+        <div class="brand-row ui">
+          <div class="brand" style="text-transform:none;">Arthentico-X</div>
+          <div style="text-align:right;">
+            <div>Austria / DACH / Europe</div>
+            <div style="margin-top:8px;">EN / DE</div>
+          </div>
+        </div>
+        <nav class="menu ui">
+          <span>Discover</span>
+          <span>Artists</span>
+          <span>Market Insights</span>
+          <span>Sell</span>
+          <span>Search</span>
+          <span>Login</span>
+        </nav>
+        <div class="hero-copy">
+          <div class="ui" style="color:var(--muted);margin-bottom:14px;">Option C / Curator Route</div>
+          <h1>Walk The Market Like A Collection.</h1>
+          <p>
+            Instead of showing all inventory at once, the landing page becomes a guided route:
+            persistent curatorial orientation on the left, immersive work chapters on the right,
+            and valuation modules revealed as part of the sequence.
+          </p>
+        </div>
+        <div class="visual"></div>
+        <div class="stats ui">
+          <div class="stat"><span>Works Live</span><strong>142</strong></div>
+          <div class="stat"><span>Artists Tracked</span><strong>38</strong></div>
+          <div class="stat"><span>Avg. Value Drift</span><strong>+7.2%</strong></div>
+          <div class="stat"><span>Resale Eligible</span><strong>56</strong></div>
+        </div>
+        <div class="filter-list ui">
+          <span>Filter</span>
+          <span>Sort By</span>
+          <span>Medium</span>
+          <span>Price</span>
+          <span>Artist Growth</span>
+          <span>Showing 12 of 108 Works</span>
+        </div>
+      </aside>
+      <main class="route">
+        <section class="chapter">
+          <div class="chapter-stage">
+            <div class="chapter-visual"></div>
+            <div class="chapter-caption ui">
+              <span>Artist Direct</span>
+              <span>Primary market</span>
+            </div>
+          </div>
+          <div class="chapter-copy">
+            <div class="ui" style="color:var(--muted);">Chapter 01</div>
+            <h2>Folding Realities</h2>
+            <div class="artist">Michael Wegerer</div>
+            <p>
+              The work is introduced like a room text rather than a product card. That changes the
+              tone from transactional browsing to controlled discovery while keeping commerce intact.
+            </p>
+            <div class="stack ui">
+              <div class="stack-row"><span>Asking Price</span><span>EUR 4,800</span></div>
+              <div class="stack-row"><span>Market Estimate</span><span>+6.4% est.</span></div>
+              <div class="stack-row"><span>Shipping</span><span>Platform coordinated</span></div>
+              <div class="stack-row"><span>Verification</span><span>Document reviewed</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="chapter">
+          <div class="chapter-stage">
+            <div class="chapter-visual alt-one"></div>
+            <div class="chapter-caption ui">
+              <span>Collector Resale</span>
+              <span>Secondary market</span>
+            </div>
+          </div>
+          <div class="chapter-copy">
+            <div class="ui" style="color:var(--muted);">Chapter 02</div>
+            <h2>Blue Study No. 2</h2>
+            <div class="artist">Alina Babenko</div>
+            <p>
+              Resale becomes its own chapter with ownership context and value positioning, instead
+              of appearing as just another SKU in a mixed catalogue.
+            </p>
+            <div class="stack ui">
+              <div class="stack-row"><span>Asking Price</span><span>EUR 3,250</span></div>
+              <div class="stack-row"><span>Market Estimate</span><span>Within range</span></div>
+              <div class="stack-row"><span>Ownership Trail</span><span>1 prior sale</span></div>
+              <div class="stack-row"><span>Seller Type</span><span>Collector</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="chapter">
+          <div class="chapter-stage">
+            <div class="chapter-visual alt-two"></div>
+            <div class="chapter-caption ui">
+              <span>Gallery Listing</span>
+              <span>Bulk portfolio ready</span>
+            </div>
+          </div>
+          <div class="chapter-copy">
+            <div class="ui" style="color:var(--muted);">Chapter 03</div>
+            <h2>Grey Geometry</h2>
+            <div class="artist">Anna Nowak</div>
+            <p>
+              Gallery inventory is framed with artist attribution and portfolio movement, which
+              keeps partner accounts compatible with the same marketplace model.
+            </p>
+            <div class="stack ui">
+              <div class="stack-row"><span>Asking Price</span><span>EUR 8,900</span></div>
+              <div class="stack-row"><span>Market Estimate</span><span>+11.1% est.</span></div>
+              <div class="stack-row"><span>Seller Type</span><span>Gallery</span></div>
+              <div class="stack-row"><span>Portfolio Trend</span><span>+9.3% annual</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="chapter">
+          <div class="chapter-stage">
+            <div class="chapter-visual alt-three"></div>
+            <div class="chapter-caption ui">
+              <span>Platform Shipping</span>
+              <span>Operational visibility</span>
+            </div>
+          </div>
+          <div class="chapter-copy">
+            <div class="ui" style="color:var(--muted);">Chapter 04</div>
+            <h2>Night Cabinet</h2>
+            <div class="artist">Jan Pater</div>
+            <p>
+              Shipping, carrier control, and platform intervention are made explicit in the chapter
+              structure, which helps trust without forcing everything into a dense product tile.
+            </p>
+            <div class="stack ui">
+              <div class="stack-row"><span>Asking Price</span><span>EUR 12,400</span></div>
+              <div class="stack-row"><span>Market Estimate</span><span>Below range</span></div>
+              <div class="stack-row"><span>Shipping</span><span>Seller or platform</span></div>
+              <div class="stack-row"><span>Carrier Policy</span><span>Approved network</span></div>
+            </div>
+          </div>
+        </section>
+        <section class="intelligence">
+          <div class="chart-panel">
+            <div class="ui" style="color:var(--muted);margin-bottom:10px;">Artwork Valuation</div>
+            <h3 style="margin:0 0 14px;font-family:'Times New Roman', Georgia, serif;font-size:42px;font-weight:400;letter-spacing:-0.04em;">Price movement without dashboard fatigue.</h3>
+            <div class="chart"></div>
+          </div>
+          <div class="signal-panel">
+            <div class="ui" style="color:var(--muted);margin-bottom:10px;">Artist Signal Stack</div>
+            <div class="signal-grid">
+              <div class="signal">
+                <div class="ui" style="color:var(--muted);font-size:10px;">Exhibitions</div>
+                <strong>14 tracked</strong>
+              </div>
+              <div class="signal">
+                <div class="ui" style="color:var(--muted);font-size:10px;">Grants & Prizes</div>
+                <strong>5 active factors</strong>
+              </div>
+              <div class="signal">
+                <div class="ui" style="color:var(--muted);font-size:10px;">Comparable Sales</div>
+                <strong>31 weighted comps</strong>
+              </div>
+              <div class="signal">
+                <div class="ui" style="color:var(--muted);font-size:10px;">Portfolio Momentum</div>
+                <strong>+8.1%</strong>
+              </div>
+            </div>
+            <div class="summary">
+              <p>
+                This route is closer to a foundation or museum landing page than to fashion
+                commerce. The visitor keeps orientation through the persistent rail while the
+                marketplace logic unfolds in chapters.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+  </html>

@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Option D - Void Canvas</title>
+    <style>
+      :root {
+        --bg: #08080a;
+        --surface: #111114;
+        --surface-2: #18181c;
+        --ink: #f0ece4;
+        --muted: #78756e;
+        --line: #252528;
+        --gold: #c9a84c;
+        --gold-dim: rgba(201,168,76,0.12);
+      }
+      * { box-sizing: border-box; margin: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* NAV */
+      .nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 40px;
+        height: 64px;
+        background: rgba(8,8,10,0.82);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--line);
+      }
+      .nav-logo {
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+      .nav-links {
+        display: flex;
+        gap: 32px;
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .nav-links span:hover { color: var(--ink); cursor: pointer; }
+      .nav-actions {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+      }
+      .nav-actions span {
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .nav-btn {
+        padding: 8px 18px;
+        border: 1px solid var(--gold);
+        color: var(--gold);
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      /* HERO */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 0 40px 80px;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(ellipse 60% 50% at 65% 40%, rgba(201,168,76,0.06) 0%, transparent 70%),
+          radial-gradient(ellipse 40% 60% at 30% 60%, rgba(201,168,76,0.03) 0%, transparent 70%);
+        pointer-events: none;
+      }
+      .hero-eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 28px;
+      }
+      .hero h1 {
+        font-size: clamp(60px, 9.5vw, 140px);
+        font-weight: 200;
+        line-height: 0.92;
+        letter-spacing: -0.04em;
+        max-width: 900px;
+      }
+      .hero h1 em {
+        font-style: italic;
+        font-weight: 300;
+        color: var(--gold);
+      }
+      .hero-sub {
+        max-width: 480px;
+        margin-top: 32px;
+        font-size: 16px;
+        line-height: 1.7;
+        color: var(--muted);
+        font-weight: 300;
+      }
+      .hero-rule {
+        width: 64px;
+        height: 1px;
+        background: var(--gold);
+        margin-top: 40px;
+      }
+
+      /* SPOTLIGHT STRIP */
+      .spotlight {
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        padding: 56px 0;
+      }
+      .spotlight-label {
+        padding: 0 40px;
+        font-size: 10px;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 32px;
+      }
+      .spotlight-track {
+        display: flex;
+        gap: 2px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        padding: 0 40px;
+      }
+      .spotlight-track::-webkit-scrollbar { display: none; }
+      .spot-card {
+        flex: 0 0 380px;
+        scroll-snap-align: start;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        overflow: hidden;
+        position: relative;
+        transition: border-color 0.3s;
+      }
+      .spot-card:hover { border-color: var(--gold); }
+      .spot-img {
+        aspect-ratio: 3/4;
+        position: relative;
+      }
+      .spot-img::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, var(--surface) 0%, transparent 40%);
+      }
+      .spot-body {
+        padding: 20px 22px 24px;
+        position: relative;
+      }
+      .spot-tag {
+        font-size: 9px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 12px;
+      }
+      .spot-body h3 {
+        font-size: 22px;
+        font-weight: 300;
+        letter-spacing: -0.01em;
+        margin-bottom: 6px;
+      }
+      .spot-artist {
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 18px;
+      }
+      .spot-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+      }
+      .spot-price {
+        font-weight: 500;
+        letter-spacing: 0.02em;
+      }
+      .spot-signal {
+        color: var(--gold);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+      }
+
+      /* SIGNAL BAR */
+      .signal-bar {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border-bottom: 1px solid var(--line);
+      }
+      .signal-cell {
+        padding: 36px 40px;
+        border-right: 1px solid var(--line);
+      }
+      .signal-cell:last-child { border-right: none; }
+      .signal-cell small {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 12px;
+      }
+      .signal-cell strong {
+        font-size: 36px;
+        font-weight: 200;
+        letter-spacing: -0.02em;
+      }
+
+      /* FEATURED SECTION */
+      .featured {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        min-height: 80vh;
+      }
+      .feat-visual {
+        position: relative;
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        background:
+          linear-gradient(rgba(8,8,10,0.2), rgba(8,8,10,0.2)),
+          linear-gradient(155deg, #1a1a1e, #2c2a24 40%, #14130f 70%);
+        overflow: hidden;
+      }
+      .feat-visual::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 300px;
+        height: 300px;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+      }
+      .feat-badge {
+        position: absolute;
+        left: 28px;
+        top: 28px;
+        font-size: 9px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gold);
+        padding: 10px 14px;
+        border: 1px solid rgba(201,168,76,0.25);
+        background: rgba(8,8,10,0.7);
+      }
+      .feat-content {
+        padding: 56px 48px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-bottom: 1px solid var(--line);
+      }
+      .feat-content .kicker {
+        font-size: 10px;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 24px;
+      }
+      .feat-content h2 {
+        font-size: 48px;
+        font-weight: 200;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        margin-bottom: 12px;
+      }
+      .feat-content .artist-name {
+        font-size: 15px;
+        color: var(--muted);
+        margin-bottom: 32px;
+      }
+      .feat-details {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        padding-top: 28px;
+        border-top: 1px solid var(--line);
+      }
+      .feat-detail-label {
+        font-size: 9px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .feat-detail-value {
+        font-size: 20px;
+        font-weight: 300;
+      }
+      .feat-detail-value.gold { color: var(--gold); }
+
+      /* VALUATION SECTION */
+      .valuation {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-bottom: 1px solid var(--line);
+      }
+      .val-panel {
+        padding: 48px;
+        border-right: 1px solid var(--line);
+      }
+      .val-panel:last-child { border-right: none; }
+      .val-panel h2 {
+        font-size: 10px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 28px;
+      }
+      .val-chart {
+        height: 200px;
+        position: relative;
+        background:
+          repeating-linear-gradient(
+            to top,
+            transparent,
+            transparent 49px,
+            var(--line) 49px,
+            var(--line) 50px
+          );
+      }
+      .val-chart::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 5%;
+        right: 5%;
+        height: 100%;
+        background:
+          linear-gradient(90deg,
+            transparent 0%, transparent 8%,
+            var(--gold-dim) 9%, var(--gold-dim) 14%,
+            transparent 15%, transparent 28%,
+            var(--gold-dim) 29%, var(--gold-dim) 34%,
+            transparent 35%, transparent 48%,
+            var(--gold-dim) 49%, var(--gold-dim) 54%,
+            transparent 55%, transparent 68%,
+            var(--gold-dim) 69%, var(--gold-dim) 74%,
+            transparent 75%, transparent 88%,
+            var(--gold-dim) 89%, var(--gold-dim) 94%,
+            transparent 95%
+          );
+      }
+      .val-legend {
+        display: flex;
+        gap: 24px;
+        margin-top: 18px;
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .val-dot {
+        width: 8px;
+        height: 8px;
+        display: inline-block;
+        margin-right: 8px;
+        vertical-align: middle;
+      }
+      .val-narrative {
+        font-size: 24px;
+        font-weight: 200;
+        line-height: 1.5;
+        letter-spacing: -0.01em;
+      }
+      .val-narrative em {
+        font-style: normal;
+        color: var(--gold);
+      }
+      .val-note {
+        margin-top: 28px;
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+
+      /* FOOTER */
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 28px 40px;
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .footer-logo { color: var(--gold); }
+
+      @media (max-width: 1080px) {
+        .featured, .valuation, .signal-bar { grid-template-columns: 1fr; }
+        .signal-cell { border-right: none; border-bottom: 1px solid var(--line); }
+        .signal-cell:last-child { border-bottom: none; }
+        .feat-visual { border-right: none; min-height: 50vh; }
+        .val-panel { border-right: none; border-bottom: 1px solid var(--line); }
+        .val-panel:last-child { border-bottom: none; }
+        .spot-card { flex: 0 0 300px; }
+      }
+      @media (max-width: 640px) {
+        .nav { padding: 0 20px; }
+        .nav-links { display: none; }
+        .hero { padding: 0 20px 60px; }
+        .feat-content { padding: 36px 20px; }
+        .val-panel { padding: 36px 20px; }
+        .spotlight-label, .spotlight-track { padding: 0 20px; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="nav-logo">Arthentico-X</div>
+      <div class="nav-links">
+        <span>Collection</span>
+        <span>Artists</span>
+        <span>Market</span>
+        <span>Provenance</span>
+      </div>
+      <div class="nav-actions">
+        <span>Search</span>
+        <button class="nav-btn">Enter Gallery</button>
+      </div>
+    </nav>
+
+    <section class="hero">
+      <div class="hero-eyebrow">Primary and Secondary Market</div>
+      <h1>Where Art Meets <em>Value</em></h1>
+      <p class="hero-sub">
+        A cinematic gallery experience with embedded valuation intelligence.
+        Verified provenance, market signals, and collector resale in one quiet,
+        confident space.
+      </p>
+      <div class="hero-rule"></div>
+    </section>
+
+    <section class="signal-bar">
+      <div class="signal-cell">
+        <small>Works Live</small>
+        <strong>142</strong>
+      </div>
+      <div class="signal-cell">
+        <small>Artists Tracked</small>
+        <strong>38</strong>
+      </div>
+      <div class="signal-cell">
+        <small>Avg. Value Drift</small>
+        <strong>+7.2%</strong>
+      </div>
+      <div class="signal-cell">
+        <small>Resale Eligible</small>
+        <strong>56</strong>
+      </div>
+    </section>
+
+    <section class="spotlight">
+      <div class="spotlight-label">Currently Showing</div>
+      <div class="spotlight-track">
+        <article class="spot-card">
+          <div class="spot-img" style="background:linear-gradient(155deg,#1c1b18,#2e2b22 40%,#0e0d0b)"></div>
+          <div class="spot-body">
+            <div class="spot-tag">Artist Direct</div>
+            <h3>Folding Realities</h3>
+            <div class="spot-artist">Michael Wegerer</div>
+            <div class="spot-meta">
+              <span class="spot-price">EUR 4,800</span>
+              <span class="spot-signal">+6.4% est.</span>
+            </div>
+          </div>
+        </article>
+        <article class="spot-card">
+          <div class="spot-img" style="background:linear-gradient(155deg,#16181a,#262830 40%,#0b0c10)"></div>
+          <div class="spot-body">
+            <div class="spot-tag">Collector Resale</div>
+            <h3>Blue Study No. 2</h3>
+            <div class="spot-artist">Alina Babenko</div>
+            <div class="spot-meta">
+              <span class="spot-price">EUR 3,250</span>
+              <span class="spot-signal">Within range</span>
+            </div>
+          </div>
+        </article>
+        <article class="spot-card">
+          <div class="spot-img" style="background:linear-gradient(155deg,#1a1918,#302c24 40%,#100f0c)"></div>
+          <div class="spot-body">
+            <div class="spot-tag">Gallery Listing</div>
+            <h3>Grey Geometry</h3>
+            <div class="spot-artist">Anna Nowak</div>
+            <div class="spot-meta">
+              <span class="spot-price">EUR 8,900</span>
+              <span class="spot-signal">+11.1% est.</span>
+            </div>
+          </div>
+        </article>
+        <article class="spot-card">
+          <div class="spot-img" style="background:linear-gradient(155deg,#181716,#28251e 40%,#0d0c0a)"></div>
+          <div class="spot-body">
+            <div class="spot-tag">Platform Shipping</div>
+            <h3>Night Cabinet</h3>
+            <div class="spot-artist">Jan Pater</div>
+            <div class="spot-meta">
+              <span class="spot-price">EUR 12,400</span>
+              <span class="spot-signal">Below range</span>
+            </div>
+          </div>
+        </article>
+        <article class="spot-card">
+          <div class="spot-img" style="background:linear-gradient(155deg,#191a18,#2a2c24 40%,#0c0d0b)"></div>
+          <div class="spot-body">
+            <div class="spot-tag">Artist Direct</div>
+            <h3>Vermillion Gate</h3>
+            <div class="spot-artist">Lena Hofer</div>
+            <div class="spot-meta">
+              <span class="spot-price">EUR 6,200</span>
+              <span class="spot-signal">+9.3% est.</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="featured">
+      <div class="feat-visual">
+        <div class="feat-badge">Featured Work / Vienna</div>
+      </div>
+      <div class="feat-content">
+        <div class="kicker">Artist Spotlight</div>
+        <h2>Blue Room Study</h2>
+        <div class="artist-name">Alina Babenko, Vienna, 2024</div>
+        <div class="feat-details">
+          <div>
+            <div class="feat-detail-label">Asking Price</div>
+            <div class="feat-detail-value">EUR 3,250</div>
+          </div>
+          <div>
+            <div class="feat-detail-label">Market Estimate</div>
+            <div class="feat-detail-value gold">EUR 3,000 - 3,600</div>
+          </div>
+          <div>
+            <div class="feat-detail-label">Exhibitions</div>
+            <div class="feat-detail-value">19</div>
+          </div>
+          <div>
+            <div class="feat-detail-label">Portfolio Drift</div>
+            <div class="feat-detail-value gold">+8.4%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="valuation">
+      <div class="val-panel">
+        <h2>Valuation Trend</h2>
+        <div class="val-chart"></div>
+        <div class="val-legend">
+          <span><i class="val-dot" style="background:var(--gold)"></i>Estimate</span>
+          <span><i class="val-dot" style="background:var(--line)"></i>Asking Price</span>
+        </div>
+      </div>
+      <div class="val-panel">
+        <h2>Artist Signal Stack</h2>
+        <div class="val-narrative">
+          Exhibitions, grants, sell-through, representation, and
+          <em>institutional traction</em> feed the valuation pipeline.
+        </div>
+        <p class="val-note">
+          The intelligence layer is built into the object page.
+          Provenance strength, condition reports, and comparable sales surface
+          where collectors need them, not buried in a separate dashboard.
+        </p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span class="footer-logo">Arthentico-X</span>
+      <span>Austria / DACH / Europe</span>
+      <span>English / German</span>
+    </footer>
+  </body>
+</html>

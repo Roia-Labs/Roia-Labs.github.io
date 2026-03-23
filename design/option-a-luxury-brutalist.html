@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Option A - Luxury Brutalist Grid</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --ink: #111111;
+        --muted: #767676;
+        --line: #e6e6e6;
+        --accent: #8f1215;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+      .topbar, .nav, .filters, .statline { border-bottom: 1px solid var(--line); }
+      .topbar, .nav, .filters, .hero, .grid, .feature, .statline {
+        padding-left: 28px;
+        padding-right: 28px;
+      }
+      .topbar, .nav, .filters {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 48px;
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .nav strong {
+        font-size: 28px;
+        letter-spacing: -0.05em;
+        text-transform: none;
+      }
+      .menu, .meta {
+        display: flex;
+        gap: 18px;
+        align-items: center;
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        min-height: 72vh;
+      }
+      .hero-copy {
+        padding: 56px 0 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 20px;
+      }
+      h1 {
+        margin: 0;
+        font-size: clamp(54px, 11vw, 124px);
+        line-height: 0.9;
+        letter-spacing: -0.06em;
+        text-transform: uppercase;
+      }
+      .hero-copy p {
+        max-width: 520px;
+        margin: 22px 0 0;
+        color: #383838;
+        line-height: 1.55;
+        font-size: 15px;
+      }
+      .hero-visual {
+        background:
+          linear-gradient(rgba(17,17,17,0.08), rgba(17,17,17,0.08)),
+          linear-gradient(135deg, #cfcfcf, #ececec 45%, #b6b6b6);
+        position: relative;
+      }
+      .hero-visual::after {
+        content: "ARTWORK 01";
+        position: absolute;
+        right: 22px;
+        bottom: 18px;
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        background: rgba(255,255,255,0.86);
+        padding: 8px 10px;
+      }
+      .statline {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        padding-top: 18px;
+        padding-bottom: 18px;
+      }
+      .stat small {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .stat strong {
+        font-size: 24px;
+        font-weight: 500;
+      }
+      .filters {
+        gap: 18px;
+        justify-content: flex-start;
+      }
+      .filters .chip {
+        padding-right: 18px;
+        border-right: 1px solid var(--line);
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+        padding-top: 24px;
+        padding-bottom: 32px;
+      }
+      .card {
+        border: 1px solid var(--line);
+        background: #fff;
+      }
+      .thumb {
+        aspect-ratio: 0.82;
+        background: linear-gradient(140deg, #dadada, #f0f0f0 45%, #c2c2c2);
+      }
+      .copy { padding: 14px; }
+      .copy .tag {
+        font-size: 10px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .copy h3 {
+        margin: 10px 0 8px;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .copy p {
+        margin: 0 0 12px;
+        color: #4d4d4d;
+        font-size: 14px;
+      }
+      .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      .delta { color: var(--accent); }
+      .feature {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        padding-top: 20px;
+        padding-bottom: 56px;
+      }
+      .panel {
+        border: 1px solid var(--line);
+        padding: 22px;
+      }
+      .panel h2 {
+        margin: 0 0 16px;
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .chart {
+        height: 180px;
+        background:
+          linear-gradient(to top, transparent 23%, #efefef 24%, transparent 25%) 0 0/100% 25%,
+          linear-gradient(115deg, transparent 0 8%, #111 9% 10%, transparent 11% 28%, #111 29% 30%, transparent 31% 48%, #111 49% 50%, transparent 51% 67%, #111 68% 69%, transparent 70% 100%);
+      }
+      .legend {
+        display: flex;
+        gap: 18px;
+        margin-top: 14px;
+        font-size: 12px;
+        color: #444;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+        margin-right: 6px;
+        vertical-align: middle;
+      }
+      .footer-note {
+        margin-top: 16px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.6;
+      }
+      @media (max-width: 980px) {
+        .hero, .feature, .statline, .grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topbar">
+      <div>Austria / DACH / Europe</div>
+      <div>English / German</div>
+    </div>
+    <div class="nav">
+      <strong>Arthentico-X</strong>
+      <div class="menu">
+        <span>Discover</span>
+        <span>Artists</span>
+        <span>Market Insights</span>
+        <span>Sell</span>
+      </div>
+      <div class="meta">
+        <span>Search</span>
+        <span>Login</span>
+      </div>
+    </div>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Primary and Secondary Market</div>
+        <h1>Art. Market. Capital.</h1>
+        <p>
+          A luxury art marketplace with valuation intelligence, verified provenance, seller-led
+          pricing, and collector resale. Fashion-grade commerce discipline, art-market trust.
+        </p>
+      </div>
+      <div class="hero-visual"></div>
+    </section>
+    <section class="statline">
+      <div class="stat"><small>Works Live</small><strong>142</strong></div>
+      <div class="stat"><small>Artists Tracked</small><strong>38</strong></div>
+      <div class="stat"><small>Avg. Value Drift</small><strong>+7.2%</strong></div>
+      <div class="stat"><small>Resale Eligible</small><strong>56</strong></div>
+    </section>
+    <section class="filters">
+      <span class="chip">Filter</span>
+      <span class="chip">Sort By</span>
+      <span class="chip">Medium</span>
+      <span class="chip">Price</span>
+      <span class="chip">Artist Growth</span>
+      <span>Showing 12 of 108 works</span>
+    </section>
+    <section class="grid">
+      <article class="card">
+        <div class="thumb"></div>
+        <div class="copy">
+          <div class="tag">Artist Direct</div>
+          <h3>Folding Realities</h3>
+          <p>Michael Wegerer</p>
+          <div class="row"><span>EUR 4,800</span><span class="delta">+6.4% est.</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="thumb" style="background:linear-gradient(135deg,#cacaca,#efefef 52%,#b2b2b2)"></div>
+        <div class="copy">
+          <div class="tag">Collector Resale</div>
+          <h3>Blue Study No. 2</h3>
+          <p>Alina Babenko</p>
+          <div class="row"><span>EUR 3,250</span><span class="delta">Within range</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="thumb" style="background:linear-gradient(135deg,#ddd,#f6f6f6 46%,#c8c8c8)"></div>
+        <div class="copy">
+          <div class="tag">Gallery Listing</div>
+          <h3>Grey Geometry</h3>
+          <p>Anna Nowak</p>
+          <div class="row"><span>EUR 8,900</span><span class="delta">+11.1% est.</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="thumb" style="background:linear-gradient(135deg,#c7c7c7,#ececec 54%,#b7b7b7)"></div>
+        <div class="copy">
+          <div class="tag">Platform Shipping</div>
+          <h3>Night Cabinet</h3>
+          <p>Jan Pater</p>
+          <div class="row"><span>EUR 12,400</span><span class="delta">Below range</span></div>
+        </div>
+      </article>
+    </section>
+    <section class="feature">
+      <div class="panel">
+        <h2>Artwork Valuation</h2>
+        <div class="chart"></div>
+        <div class="legend">
+          <span><i class="dot" style="background:#111"></i>Estimate</span>
+          <span><i class="dot" style="background:#8f1215"></i>Asking Price</span>
+        </div>
+        <div class="footer-note">
+          Display logic remains flexible: ask price only, or ask price plus market estimate.
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Artist Signal Stack</h2>
+        <div class="footer-note">
+          Exhibitions, grants, sell-through, representation, provenance strength, condition,
+          comparable sales, and institutional traction feed the valuation pipeline.
+        </div>
+        <div class="footer-note">
+          The overall feel stays commerce-led and severe, but the intelligence layer is built into
+          the object page rather than pushed into a dashboard-only experience.
+        </div>
+      </div>
+    </section>
+  </body>
+  </html>
+
