@@ -1,0 +1,55 @@
+<svg width="248" height="262" viewBox="0 0 248 262" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="248" height="262" fill="#FBFAF7"/>
+  <path
+    d="M124 20
+    C93 20 70 24 54 35
+    C39 45 31 63 31 89
+    C31 116 39 143 54 165
+    C67 185 87 199 112 207
+    C116 208 120 210 124 212"
+    stroke="#111111"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M124 20
+    C155 20 178 24 194 35
+    C209 45 217 63 217 89
+    C217 116 209 143 194 165
+    C181 185 161 199 136 207
+    C132 208 128 210 124 212"
+    stroke="#111111"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M124 21
+    C124 42 123 62 123 83
+    C123 98 122 112 122 126
+    C122 138 121 149 124 156
+    C128 164 136 171 145 176
+    C151 180 151 185 147 191
+    C143 197 135 197 129 201
+    C123 205 121 211 124 214"
+    stroke="#111111"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M124 212L88 261"
+    stroke="#111111"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M124 212L160 261"
+    stroke="#111111"
+    stroke-width="2.2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>
