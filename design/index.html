@@ -27,10 +27,35 @@
         color: #5d5d5d;
         line-height: 1.6;
       }
+      .top-links {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 0 0 18px;
+      }
       .grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 18px;
+      }
+      .brief {
+        margin: 26px 0 22px;
+        background: #fff;
+        border: 1px solid #dbd7cf;
+        padding: 22px;
+        display: grid;
+        grid-template-columns: 1.15fr auto;
+        gap: 18px;
+        align-items: center;
+      }
+      .brief h2 {
+        margin: 0 0 10px;
+        font-size: 28px;
+        letter-spacing: -0.04em;
+      }
+      .brief p {
+        margin: 0;
+        max-width: 760px;
       }
       .card {
         background: #fff;
@@ -76,18 +101,48 @@
         text-transform: uppercase;
       }
       @media (max-width: 900px) {
+        .brief,
         .grid { grid-template-columns: 1fr; }
       }
     </style>
   </head>
   <body>
     <div class="wrap">
+      <div class="top-links">
+        <a class="btn" href="../en/">Open Main Landing Page</a>
+      </div>
       <h1>Arthentico-X UI Directions</h1>
       <p>
         Option A remains the luxury-commerce benchmark. Options B and C keep the same product
         modules but change the architecture completely: one behaves like a programme page, the
         other like a guided museum route.
       </p>
+      <section class="brief">
+        <div>
+          <h2>Founder / Investor Brief</h2>
+          <p>
+            A presentation-friendly HTML version of the product-scope document, reframed as a
+            concise business and product brief: vision, wedge, personas, monetization, scope
+            boundaries, and rollout logic.
+          </p>
+        </div>
+        <div class="links">
+          <a class="btn" href="./product-scope-founder-investor-brief.html">Open Brief</a>
+        </div>
+      </section>
+      <section class="brief">
+        <div>
+          <h2>IA / Flows Brief</h2>
+          <p>
+            A presentation-friendly HTML version of the information architecture and flow document,
+            reframed as an operating-system brief: public surfaces, role workspaces, trust-critical
+            workflows, and the MVP screens that cannot be cut.
+          </p>
+        </div>
+        <div class="links">
+          <a class="btn" href="./information-architecture-founder-investor-brief.html">Open Brief</a>
+        </div>
+      </section>
       <div class="grid">
         <section class="card">
           <h2>Option A. Luxury Brutalist Grid</h2>

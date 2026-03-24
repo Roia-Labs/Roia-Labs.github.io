@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arthentico-X IA / Flow Brief</title>
+    <style>
+      :root {
+        --bg: #f5f1ea;
+        --paper: #fffdf8;
+        --ink: #111111;
+        --muted: #5e5952;
+        --line: #ddd5ca;
+        --accent: #8f1215;
+        --soft: #ebe4d8;
+        --positive: #1f6a3d;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: linear-gradient(180deg, #f5f1ea 0%, #f8f4ee 100%);
+        color: var(--ink);
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .frame {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 28px 24px 72px;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .hero {
+        margin-top: 22px;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 24px;
+      }
+
+      .hero-panel,
+      .panel,
+      .metric,
+      .timeline-step,
+      .surface-card {
+        border: 1px solid var(--line);
+        background: var(--paper);
+      }
+
+      .hero-panel {
+        padding: 30px 30px 34px;
+      }
+
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      h1 {
+        margin: 18px 0 0;
+        max-width: 9ch;
+        font-size: clamp(52px, 9vw, 108px);
+        line-height: 0.9;
+        letter-spacing: -0.08em;
+      }
+
+      .hero-copy {
+        margin-top: 22px;
+        max-width: 760px;
+        color: #2e2a26;
+        font-size: 17px;
+        line-height: 1.75;
+      }
+
+      .hero-actions {
+        margin-top: 28px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--ink);
+        padding: 0 16px;
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .button--primary {
+        background: var(--ink);
+        color: var(--paper);
+      }
+
+      .hero-side {
+        display: grid;
+        gap: 16px;
+      }
+
+      .metric {
+        padding: 20px;
+      }
+
+      .metric small {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .metric strong {
+        display: block;
+        margin-top: 10px;
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: -0.05em;
+      }
+
+      .metric p {
+        margin: 10px 0 0;
+        color: var(--muted);
+        line-height: 1.6;
+        font-size: 14px;
+      }
+
+      .stats {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .section {
+        margin-top: 20px;
+        display: grid;
+        gap: 20px;
+      }
+
+      .section-two {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .panel {
+        padding: 24px;
+      }
+
+      .panel h2 {
+        margin: 0;
+        font-size: 32px;
+        line-height: 0.96;
+        letter-spacing: -0.06em;
+      }
+
+      .panel p.lead {
+        margin: 18px 0 0;
+        max-width: 66ch;
+        color: #2f2a25;
+        font-size: 15px;
+        line-height: 1.75;
+      }
+
+      .bullet-grid {
+        margin-top: 22px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px 18px;
+      }
+
+      .bullet {
+        padding-top: 12px;
+        border-top: 1px solid var(--line);
+        font-size: 14px;
+        line-height: 1.65;
+        color: #2f2a25;
+      }
+
+      .bullet strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .surface-grid,
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .timeline {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .surface-card,
+      .timeline-step {
+        padding: 18px;
+      }
+
+      .surface-card h3,
+      .timeline-step strong {
+        margin: 0;
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: -0.05em;
+      }
+
+      .surface-card p,
+      .timeline-step p {
+        margin: 14px 0 0;
+        color: var(--muted);
+        line-height: 1.65;
+        font-size: 14px;
+      }
+
+      .surface-card ul {
+        margin: 14px 0 0;
+        padding-left: 18px;
+        color: #2f2a25;
+        line-height: 1.75;
+        font-size: 14px;
+      }
+
+      .timeline-step small {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .timeline-step strong {
+        display: block;
+        margin-top: 12px;
+      }
+
+      .signal {
+        color: var(--positive);
+      }
+
+      .footer-note {
+        margin-top: 24px;
+        font-size: 12px;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+
+      @media (max-width: 1100px) {
+        .hero,
+        .section-two,
+        .stats,
+        .surface-grid,
+        .timeline {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (max-width: 780px) {
+        .hero,
+        .section-two,
+        .stats,
+        .bullet-grid,
+        .surface-grid,
+        .timeline {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-panel,
+        .panel,
+        .metric,
+        .surface-card,
+        .timeline-step {
+          padding: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame">
+      <div class="topbar">
+        <div>Arthentico-X / IA &amp; Flows Brief</div>
+        <div><a href="./index.html">Back to design directions</a></div>
+      </div>
+
+      <section class="hero">
+        <div class="hero-panel">
+          <div class="eyebrow">Marketplace operating model</div>
+          <h1>Surfaces, trust, and motion through the system.</h1>
+          <p class="hero-copy">
+            Arthentico-X needs more than beautiful catalogue pages. It needs a visible operating
+            system for buyers, artists, organizations, and admins, where every important workflow
+            is legible: discovery, listing, verification, valuation, resale, and shipping.
+          </p>
+          <div class="hero-actions">
+            <a class="button button--primary" href="./product-scope-founder-investor-brief.html">Open product scope brief</a>
+            <a class="button" href="./index.html">Return to design directions</a>
+          </div>
+        </div>
+
+        <div class="hero-side">
+          <div class="metric">
+            <small>Public layer</small>
+            <strong>Catalogue first</strong>
+            <p>Discovery stays open. Premium value comes from deeper market interpretation, not from hiding the catalogue.</p>
+          </div>
+          <div class="metric">
+            <small>Operating layer</small>
+            <strong>Four role systems</strong>
+            <p>Buyer, artist, organization, and admin each need dedicated surfaces that match their incentives and daily actions.</p>
+          </div>
+          <div class="metric">
+            <small>Trust layer</small>
+            <strong><span class="signal">Review, provenance, and shipping clarity</span></strong>
+            <p>The platform wins when purchase-risk, authenticity risk, and operational ambiguity are reduced on every listing.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div class="metric">
+          <small>Top-level navigation</small>
+          <strong>5 core entries</strong>
+          <p>Discover, Artists, Galleries, Market Insights, and Enter Gallery, with Basket treated as a distinct utility action.</p>
+        </div>
+        <div class="metric">
+          <small>Public surfaces</small>
+          <strong>Catalogue + context</strong>
+          <p>Marketing, search, artwork detail, artist pages, gallery pages, collections, and insights.</p>
+        </div>
+        <div class="metric">
+          <small>Private surfaces</small>
+          <strong>Role-specific workspaces</strong>
+          <p>Each account type needs a dashboard built around its own operational priorities.</p>
+        </div>
+        <div class="metric">
+          <small>Core workflows</small>
+          <strong>8 key flows</strong>
+          <p>From buyer purchase to admin review and background revaluation.</p>
+        </div>
+      </section>
+
+      <section class="section section-two">
+        <div class="panel">
+          <div class="eyebrow">Navigation thesis</div>
+          <h2>How the product should feel on first contact</h2>
+          <p class="lead">
+            The public surface should read as a premium art marketplace with clear entry points for
+            discovery, trust, and commercial action. The navigation must be simple enough for new
+            buyers, but structured enough to signal that Arthentico-X has institutional depth.
+          </p>
+          <div class="bullet-grid">
+            <div class="bullet">
+              <strong>Discover</strong>
+              The broadest entry for the public catalogue, curated sets, and market browsing.
+            </div>
+            <div class="bullet">
+              <strong>Artists</strong>
+              The reputation and biography layer: portfolios, context, exhibitions, awards, and pricing progression.
+            </div>
+            <div class="bullet">
+              <strong>Galleries</strong>
+              A professional lane for institutions, represented artists, and batch-managed inventory.
+            </div>
+            <div class="bullet">
+              <strong>Market Insights</strong>
+              Editorial, research, valuation explainers, and premium-adjacent content.
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="eyebrow">Public architecture</div>
+          <h2>What the open web layer must contain</h2>
+          <p class="lead">
+            The public product is not only a landing page. It is a structured commerce and trust
+            surface: artwork detail, artist context, methodology, protections, and enough public
+            price intelligence to make the product feel differentiated before subscription.
+          </p>
+          <div class="bullet-grid">
+            <div class="bullet">
+              <strong>Marketing</strong>
+              Home, about, valuation logic, seller acquisition pages, subscriptions, FAQ, and events.
+            </div>
+            <div class="bullet">
+              <strong>Marketplace</strong>
+              Search, artwork detail, artist and gallery profiles, collections, and watchlist previews.
+            </div>
+            <div class="bullet">
+              <strong>Trust cues</strong>
+              Seller identity, contracting party, protections, provenance, certificates, and shipping responsibility.
+            </div>
+            <div class="bullet">
+              <strong>Conversion</strong>
+              Buy, inquire, make offer, subscribe, or register, depending on user maturity.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="panel">
+          <div class="eyebrow">Role surfaces</div>
+          <h2>Who needs a private workspace</h2>
+          <div class="surface-grid" style="margin-top: 22px;">
+            <div class="surface-card">
+              <h3>Buyer</h3>
+              <p>Portfolio logic, saved intent, and post-purchase control.</p>
+              <ul>
+                <li>Dashboard, holdings, watchlist, alerts</li>
+                <li>Orders, inquiries, relisting</li>
+                <li>Subscription and verification management</li>
+              </ul>
+            </div>
+            <div class="surface-card">
+              <h3>Artist</h3>
+              <p>Inventory and reputation live together in the seller workspace.</p>
+              <ul>
+                <li>My artworks, sales, inquiries, payouts</li>
+                <li>Documents, certificates, analytics</li>
+                <li>Profile settings and public highlights</li>
+              </ul>
+            </div>
+            <div class="surface-card">
+              <h3>Gallery / Auction</h3>
+              <p>Inventory-heavy organization logic with team management.</p>
+              <ul>
+                <li>Inventory, artists, bulk import, sold portfolio</li>
+                <li>Team members and documents</li>
+                <li>Organization settings and reporting</li>
+              </ul>
+            </div>
+            <div class="surface-card">
+              <h3>Admin</h3>
+              <p>Moderation, trust, disputes, and platform control.</p>
+              <ul>
+                <li>Approvals, moderation, compliance, valuation review</li>
+                <li>Orders, payouts, subscriptions, content</li>
+                <li>Audit log and import jobs</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-two">
+        <div class="panel">
+          <div class="eyebrow">Motion through the product</div>
+          <h2>The flows that matter commercially</h2>
+          <div class="bullet-grid">
+            <div class="bullet">
+              <strong>Buyer discovers and buys</strong>
+              Search, evaluate, verify shipping mode, transact, and see the work move into holdings.
+            </div>
+            <div class="bullet">
+              <strong>Artist lists a work</strong>
+              Build profile, upload documents and media, choose shipping mode, and publish if approved.
+            </div>
+            <div class="bullet">
+              <strong>Organization uploads in bulk</strong>
+              Import structured inventory with validation, deduplication, and admin review where needed.
+            </div>
+            <div class="bullet">
+              <strong>Buyer relists</strong>
+              Preserve provenance, refresh condition documents, and reopen liquidity from owned inventory.
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="eyebrow">Trust and platform logic</div>
+          <h2>The flows that protect the marketplace</h2>
+          <div class="bullet-grid">
+            <div class="bullet">
+              <strong>Admin review</strong>
+              Inspect metadata, certificates, photos, and seller state before approving or deactivating.
+            </div>
+            <div class="bullet">
+              <strong>Valuation workflow</strong>
+              Normalize object data, refresh artist signals, generate confidence-banded estimates, and allow override.
+            </div>
+            <div class="bullet">
+              <strong>Background revaluation</strong>
+              Refresh market signals without mutating the seller-controlled live price.
+            </div>
+            <div class="bullet">
+              <strong>Platform shipping</strong>
+              Choose carrier, generate label, issue packaging instructions, and track shipment state.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="panel">
+          <div class="eyebrow">UX operating rules</div>
+          <h2>What makes the product credible instead of decorative</h2>
+          <div class="surface-grid" style="margin-top: 22px;">
+            <div class="surface-card">
+              <h3>Artwork detail</h3>
+              <p>The core conversion surface.</p>
+              <ul>
+                <li>Image-first layout with price and valuation range nearby</li>
+                <li>Artist and artwork trend charts visible early</li>
+                <li>Evidence, provenance, seller protections, and shipping disclosed clearly</li>
+              </ul>
+            </div>
+            <div class="surface-card">
+              <h3>Portfolio</h3>
+              <p>Ownership must feel actionable.</p>
+              <ul>
+                <li>Holdings summary, performance, and liquidity signals</li>
+                <li>Relist access from the holding itself</li>
+              </ul>
+            </div>
+            <div class="surface-card">
+              <h3>Seller dashboards</h3>
+              <p>Operational surfaces before lifestyle surfaces.</p>
+              <ul>
+                <li>Inventory, inquiries, payouts, compliance state, and sales first</li>
+                <li>Charts as support, not decoration</li>
+              </ul>
+            </div>
+            <div class="surface-card">
+              <h3>Admin tooling</h3>
+              <p>Queue-first and evidence-first.</p>
+              <ul>
+                <li>Dense filters, side panels, side-by-side evidence review</li>
+                <li>Irreversible actions require notes and confirmation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-two">
+        <div class="panel">
+          <div class="eyebrow">Premium logic</div>
+          <h2>What stays public vs paid</h2>
+          <p class="lead">
+            Public browsing remains the acquisition engine. Paywalling basic discovery would weaken
+            marketplace growth. Premium should unlock interpretation, not visibility.
+          </p>
+          <div class="bullet-grid">
+            <div class="bullet">
+              <strong>Keep public</strong>
+              Artwork pages, artist pages, public price, biography, public highlights, and a basic valuation summary.
+            </div>
+            <div class="bullet">
+              <strong>Gate behind subscription</strong>
+              Comparable-sale detail, advanced analytics, alerts, and deeper artist-market research.
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="eyebrow">MVP discipline</div>
+          <h2>What cannot be cut</h2>
+          <div class="timeline" style="margin-top: 22px;">
+            <div class="timeline-step">
+              <small>Core conversion</small>
+              <strong>Artwork detail + evidence</strong>
+              <p>The page where trust, valuation, and purchase intent come together.</p>
+            </div>
+            <div class="timeline-step">
+              <small>Supply control</small>
+              <strong>Seller operations</strong>
+              <p>Artist inventory management, gallery bulk import, and admin moderation are non-negotiable.</p>
+            </div>
+            <div class="timeline-step">
+              <small>Retention logic</small>
+              <strong>Buyer portfolio</strong>
+              <p>Owning, tracking, and relisting must exist early or resale logic stays theoretical.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <p class="footer-note">
+        This HTML brief translates the information architecture and flow document into a
+        founder/investor-facing operating view. It is meant to show how Arthentico-X becomes a real
+        market system rather than only a premium catalogue surface.
+      </p>
+    </div>
+  </body>
+</html>
